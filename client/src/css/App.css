@@ -1,0 +1,62 @@
+body{
+ /* background-image: url("../resources/butterfly-2049567_1280.jpg");*/
+  background-color: azure;
+  background-size: 100%;
+  align-items: center;  
+  
+}
+.Headline{
+  font-family: 'French Script MT';
+  font-size: 30px;
+  color: red;
+  }
+
+img {
+  width: 9vh;
+  height: 9vh;
+}
+.Main{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  
+}
+
+
+h1{
+  align-content: center;
+  font-family:'Bradley Hand ITC', sans-serif;
+  color:black;
+  text-align: center;
+}
+
+nav {
+  align-items: center;
+  min-height: 10vh;
+  background:lightsteelblue;
+  min-width: 90vh; 
+}
+
+.nav-links {
+  width: 50%;
+  display: flex; 
+  justify-content: space-around;
+  align-items: center;
+  font: outline;
+  list-style: none;
+  margin:10%,10%,10%,10%;
+  font-family:'David', sans-serif;
+}
+
+table{
+  background-color: #bbada0;
+  
+}
+
+th{
+  box-sizing: border-box;
+  border-color: #bbada0;
+  border-width: 10px;
+  border-style: solid;
+}
