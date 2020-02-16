@@ -30,13 +30,7 @@ class Game extends Component {
       rr1 = Math.floor(Math.random() * 4);
       rc1 = Math.floor(Math.random() * 4);
     } while (this.state.data[rr1][rc1].full);
-    /*this.setState(prevState => ({
-            data: {
-                ...prevState.data,
-                [prevState.data[rr1][rc1].full]: e.target.value,
-            },
-        })); */
-  }
+    }
  
   
   changeCell = () => {
@@ -49,12 +43,7 @@ class Game extends Component {
   };
 
  
-  componentDidMount() {
-    //this.createData();
-    /*fetch("http://localhost:3001/api/getScore")
-      .then(result => result.json())
-      .then(res => this.setState({ score: res.score }));*/
-  }
+  
 
   render() {
     const score = this.state.score;
