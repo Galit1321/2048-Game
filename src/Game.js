@@ -5,11 +5,11 @@ import Cell from "./Cell";
 class Game extends Component {
   constructor(props) {
     super(props);
-    
     this.state = {
       score: 0,
       grid:[],
-    
+      full:[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]],
+      cnt:0,
     };
 
     let arr_row=[];
@@ -24,26 +24,34 @@ class Game extends Component {
   }
  }
 
-  addElem(e) {
-    let rr1, rc1;
-    do {
-      rr1 = Math.floor(Math.random() * 4);
-      rc1 = Math.floor(Math.random() * 4);
-    } while (this.state.data[rr1][rc1].full);
-    }
+  componentDidMount(){
+    this.changeCell();
+    this.changeCell();
+  }
  
   
   changeCell = () => {
     let data=this.state.grid;
-    let x=Math.floor(Math.random()*4);
-    let y=Math.floor(Math.random()*3);
+    let x,y;
+  do{  
+    x=Math.floor(Math.random()*4);
+    y=Math.floor(Math.random()*4);
+  }
+    while(data[x][y].full);
+    this.state.full[x][y]+=1;
     data[x][y].full=true;
-    data[x][y].kind="eight";
+    if (Math.random()<0.6){
+    data[x][y].kind="two";
+    data[x][y].id=2;}
+    else{
+      data[x][y].kind="four";
+    data[x][y].id=4;
+    }
+    this.setState({cnt:this.state.cnt+1});
     this.setState({grid:data});
   };
 
  
-  
 
   render() {
     const score = this.state.score;
@@ -54,6 +62,10 @@ class Game extends Component {
         <div>
           <h1> {score}</h1>
           <h1> Welcome to the game </h1>
+          <button onClick={this.changeCell}>up</button>
+                <button onClick={this.changeCell}>left</button>
+                <button onClick={this.changeCell}>down</button>
+                <button onClick={this.changeCell}>right</button>
         </div>
         <table >
         <tbody>
@@ -70,7 +82,8 @@ class Game extends Component {
               ))}
               </tbody>
                 </table>
-                <button onClick={this.changeCell}>Click Me</button>
+               
+
       </div>
     );
   }
