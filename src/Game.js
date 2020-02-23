@@ -7,83 +7,101 @@ class Game extends Component {
     super(props);
     this.state = {
       score: 0,
-      grid:[],
-      full:[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]],
-      cnt:0,
+      grid: [],
+      full: [
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0]
+      ],
+      cnt: 0
     };
-
-    let arr_row=[];
-    let id=1;
-  for (let row = 0; row < 4; row++) {
-    arr_row=[];
-    for (let col = 0; col < 4; col++) {
-        arr_row.push({id:id , kind: "emptyCell" ,full: false,row:row,col:col,});
-        id++;
+    let arr_row = [];
+    for (let row = 0; row < 4; row++) {
+      arr_row = [];
+      for (let col = 0; col < 4; col++) {
+        arr_row.push({id: 0,kind: "emptyCell",full: false,row: row,col: col});
+       
+      }
+      this.state.grid.push(arr_row);
     }
-    this.state.grid.push(arr_row);
   }
- }
-
-  componentDidMount(){
+  stylesOfSq = ["two", "four", "eight", "sixteen", "tree"];
+  componentDidMount() {
     this.changeCell();
     this.changeCell();
   }
- 
-  
-  changeCell = () => {
-    let data=this.state.grid;
-    let x,y;
-  do{  
-    x=Math.floor(Math.random()*4);
-    y=Math.floor(Math.random()*4);
-  }
-    while(data[x][y].full);
-    this.state.full[x][y]+=1;
-    data[x][y].full=true;
-    if (Math.random()<0.6){
-    data[x][y].kind="two";
-    data[x][y].id=2;}
-    else{
-      data[x][y].kind="four";
-    data[x][y].id=4;
+
+  upperArrow = () => {
+    let table = this.state.grid;
+    for (let j = 0; j < 4; j++) {
+      let i =0;
+      while (i<3) {
+        //console.log(table[i][j]);
+        table[i][j] = table[i+1 ][j];
+        table[i+1 ][j] ={id: 0,kind: "emptyCell",full: false,row: i,col: j};
+       
+        /*if (table[i][j].id === table[i + 1][j].id ) {
+          table[i][j].id *= 2;
+        }*/
+        
+        //  
+                i++;
+      }
     }
-    this.setState({cnt:this.state.cnt+1});
-    this.setState({grid:data});
+    this.setState({ grid: table });
+    //this.changeCell();
   };
 
- 
+  changeCell = () => {
+    let data = this.state.grid;
+    let x, y;
+    do {
+      x = Math.floor(Math.random() * 4);
+      y = Math.floor(Math.random() * 4);
+    } while (data[x][y].full);
+    this.state.full[x][y] += 1;
+    data[x][y].full = true;
+    if (Math.random() < 0.6) {
+      data[x][y].kind = "two";
+      data[x][y].id = 2;
+    } else {
+      data[x][y].kind = "four";
+      data[x][y].id = 4;
+    }
+    this.setState({ cnt: this.state.cnt + 1 });
+    this.setState({ grid: data });
+  };
 
   render() {
     const score = this.state.score;
     const data = this.state.grid;
-    let cell_id=0;
+    let cell_id = 0;
     return (
       <div>
         <div>
           <h1> {score}</h1>
           <h1> Welcome to the game </h1>
-          <button onClick={this.changeCell}>up</button>
-                <button onClick={this.changeCell}>left</button>
-                <button onClick={this.changeCell}>down</button>
-                <button onClick={this.changeCell}>right</button>
+          <button onClick={this.upperArrow}>up</button>
+          <button onClick={this.changeCell}>left</button>
+          <button onClick={this.changeCell}>down</button>
+          <button onClick={this.changeCell}>right</button>
         </div>
-        <table >
-        <tbody>
-          {data.length <= 0
-            ? "NO DB ENTRIES YET"
-            : data.map(dat => (
-                <tr  key={ cell_id++}  >
+        <table>
+          <tbody>
+            {data.length <= 0
+              ? "NO DB ENTRIES YET"
+              : data.map(dat => (
+                  <tr key={cell_id++}>
                     {dat.map(elem => (
-                        <th key={elem.row.toString() + '-' + elem.col.toString()} > 
-                        <Cell kind={elem.kind} info={elem} /> 
-                        </th>
+                      <th key={elem.row.toString() + "-" + elem.col.toString()}>
+                        <Cell kind={elem.kind} info={elem} />
+                      </th>
                     ))}
-                </tr>
-              ))}
-              </tbody>
-                </table>
-               
-
+                  </tr>
+                ))}
+          </tbody>
+        </table>
       </div>
     );
   }
