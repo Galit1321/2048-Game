@@ -20,13 +20,19 @@ class Game extends Component {
     for (let row = 0; row < 4; row++) {
       arr_row = [];
       for (let col = 0; col < 4; col++) {
-        arr_row.push({id: 0,kind: "emptyCell",full: false,row: row,col: col});
-       
+        arr_row.push({ id: 0, kind: "emptyCell", full: false });
       }
       this.state.grid.push(arr_row);
     }
   }
-  stylesOfSq = ["two", "four", "eight", "sixteen", "tree"];
+  stylesOfSq = ["emptyCell", "two", "four", "eight", "sixteen", "tree"];
+  KindOfCell = {
+    "0": { id: 0, kind: "emptyCell", full: false },
+    "2": { id: 2, kind: "two", full: true },
+    "4": { id: 4, kind: "four", full: true },
+    "8": { id: 8, kind: "eight", full: true }
+  };
+
   componentDidMount() {
     this.changeCell();
     this.changeCell();
@@ -34,23 +40,35 @@ class Game extends Component {
 
   upperArrow = () => {
     let table = this.state.grid;
-    for (let j = 0; j < 4; j++) {
-      let i =0;
-      while (i<3) {
-        //console.log(table[i][j]);
-        table[i][j] = table[i+1 ][j];
-        table[i+1 ][j] ={id: 0,kind: "emptyCell",full: false,row: i,col: j};
-       
-        /*if (table[i][j].id === table[i + 1][j].id ) {
-          table[i][j].id *= 2;
-        }*/
-        
-        //  
-                i++;
+    let temp = [[], [], [], []];
+    for (let i = 0; i < 4; i++) {
+      for (let j = 0; j < 4; j++) {
+        if (table[i][j].id != 0) {
+          let n=temp[j].pop();
+          if (typeof n=== "undefined" ){
+            temp[j].push(table[i][j]);
+          }
+          else if ( n.id==table[i][j].id){
+            temp[j].push(this.KindOfCell[""+n.id*2]);
+          }
+          else{
+            temp[j].push(n);
+            temp[j].push(table[i][j]);
+          }
+          table[i][j]=this.KindOfCell['0'];
+        }
+      }
+    }
+    for (let i = 0; i < 4; i++) {
+      let lst=temp[i];
+      let row=lst.length-1;
+      while(lst.length>0){
+        table[row][i]=lst.pop();
+        row--;
       }
     }
     this.setState({ grid: table });
-    //this.changeCell();
+  this.changeCell();
   };
 
   changeCell = () => {
@@ -89,17 +107,15 @@ class Game extends Component {
         </div>
         <table>
           <tbody>
-            {data.length <= 0
-              ? "NO DB ENTRIES YET"
-              : data.map(dat => (
-                  <tr key={cell_id++}>
-                    {dat.map(elem => (
-                      <th key={elem.row.toString() + "-" + elem.col.toString()}>
-                        <Cell kind={elem.kind} info={elem} />
-                      </th>
-                    ))}
-                  </tr>
+            {data.map(dat => (
+              <tr key={cell_id++}>
+                {dat.map(elem => (
+                  <th key={cell_id + "-" + cell_id}>
+                    <Cell info={elem} />
+                  </th>
                 ))}
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
