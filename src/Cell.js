@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./css/Cell.css";
 
 class Cell extends Component {
+  
   render() {
     const data = this.props.info;
     if (data.full) {

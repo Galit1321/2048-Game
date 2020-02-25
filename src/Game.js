@@ -30,7 +30,9 @@ class Game extends Component {
     "0": { id: 0, kind: "emptyCell", full: false },
     "2": { id: 2, kind: "two", full: true },
     "4": { id: 4, kind: "four", full: true },
-    "8": { id: 8, kind: "eight", full: true }
+    "8": { id: 8, kind: "eight", full: true },
+    "16": {id: 16, kind: "thsix", full: true}
+
   };
 
   componentDidMount() {
@@ -40,24 +42,23 @@ class Game extends Component {
 
   upperArrow = () => {
     let table = this.state.grid;
-    let temp = [[], [], [], []];
-    for (let i = 0; i < 4; i++) {
-      for (let j = 0; j < 4; j++) {
+    let temp = [];
+    for (let j = 0; j < 4; j++) {
+      let arr=[];
+      for (let i = 0; i < 4; i++) {
         if (table[i][j].id != 0) {
-          let n=temp[j].pop();
-          if (typeof n=== "undefined" ){
-            temp[j].push(table[i][j]);
+          let n=arr.length;
+          if (n>0 && arr[n-1].id===table[i][j].id ){
+            arr.push(this.KindOfCell[""+ arr.pop().id*2]);;
           }
-          else if ( n.id==table[i][j].id){
-            temp[j].push(this.KindOfCell[""+n.id*2]);
-          }
+        
           else{
-            temp[j].push(n);
-            temp[j].push(table[i][j]);
+            arr.push(table[i][j]);
           }
           table[i][j]=this.KindOfCell['0'];
         }
       }
+      temp.push(arr);
     }
     for (let i = 0; i < 4; i++) {
       let lst=temp[i];
@@ -66,12 +67,58 @@ class Game extends Component {
         table[row][i]=lst.pop();
         row--;
       }
+    }  this.setState({ grid: table });
+  }
+
+  createNewGrid = () =>{
+    let res_grid=[];
+    let arr_row = [];
+    for (let row = 0; row < 4; row++) {
+      arr_row = [];
+      for (let col = 0; col < 4; col++) {
+        arr_row.push({ id: 0, kind: "emptyCell", full: false });
+      }
+      res_grid.push(arr_row);
     }
-    this.setState({ grid: table });
-  this.changeCell();
+    return  res_grid;
+  }
+
+   DownArrow = () => {
+      let table = this.state.grid;
+      let temp = [];
+      for (let j = 3; j >=0; j--) {
+        let arr=[];
+        for (let i = 3; i >=0; i--) {
+          if (table[i][j].id != 0) {
+            let n=arr.length;
+            if (n>0 && arr[n-1].id===table[i][j].id ){
+              arr.push(this.KindOfCell[""+ arr.pop().id*2]);;
+            }
+          
+            else{
+              arr.push(table[i][j]);
+            }
+          }
+        }
+        temp.push(arr);
+      }
+      temp.reverse();
+      console.log(temp);
+      let newGrid=this.createNewGrid();
+      for (let i = 0; i < 4; i++) {
+        let lst=temp[i];
+        let row=4-lst.length;
+        while(lst.length>0){
+          newGrid[row][i]=lst.pop();
+          row++;
+        }
+      }
+    this.setState({ grid: newGrid });
+    ///this.changeCell();
   };
 
   changeCell = () => {
+    console.log("call function line 77");
     let data = this.state.grid;
     let x, y;
     do {
@@ -95,6 +142,7 @@ class Game extends Component {
     const score = this.state.score;
     const data = this.state.grid;
     let cell_id = 0;
+    let col_id=0;
     return (
       <div>
         <div>
@@ -102,7 +150,7 @@ class Game extends Component {
           <h1> Welcome to the game </h1>
           <button onClick={this.upperArrow}>up</button>
           <button onClick={this.changeCell}>left</button>
-          <button onClick={this.changeCell}>down</button>
+          <button onClick={this.DownArrow}>down</button>
           <button onClick={this.changeCell}>right</button>
         </div>
         <table>
@@ -110,7 +158,7 @@ class Game extends Component {
             {data.map(dat => (
               <tr key={cell_id++}>
                 {dat.map(elem => (
-                  <th key={cell_id + "-" + cell_id}>
+                  <th key={cell_id + "-" +(col_id++) }>
                     <Cell info={elem} />
                   </th>
                 ))}
