@@ -3,28 +3,7 @@ import "./css/Cell.css";
 import Cell from "./Cell";
 
 class Game extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      score: 0,
-      grid: [],
-      full: [
-        [0, 0, 0, 0],
-        [0, 0, 0, 0],
-        [0, 0, 0, 0],
-        [0, 0, 0, 0]
-      ],
-      cnt: 0
-    };
-    let arr_row = [];
-    for (let row = 0; row < 4; row++) {
-      arr_row = [];
-      for (let col = 0; col < 4; col++) {
-        arr_row.push({ id: 0, kind: "emptyCell", full: false });
-      }
-      this.state.grid.push(arr_row);
-    }
-  }
+
   stylesOfSq = ["emptyCell", "two", "four", "eight", "sixteen", "tree"];
   KindOfCell = {
     "0": { id: 0, kind: "emptyCell", full: false },
@@ -34,11 +13,19 @@ class Game extends Component {
     "16": {id: 16, kind: "thsix", full: true}
 
   };
-
-  componentDidMount() {
+  constructor(props) {
+    super(props);
+    this.state = {
+      score: 0,
+      grid: [],
+      cnt: 0
+    };
+    this.state.grid=this.createNewGrid();
     this.changeCell();
     this.changeCell();
   }
+
+  
 
   upperArrow = () => {
     let table = this.state.grid;
@@ -46,28 +33,28 @@ class Game extends Component {
     for (let j = 0; j < 4; j++) {
       let arr=[];
       for (let i = 0; i < 4; i++) {
-        if (table[i][j].id != 0) {
+        if (table[i][j].id !== 0) {
           let n=arr.length;
           if (n>0 && arr[n-1].id===table[i][j].id ){
             arr.push(this.KindOfCell[""+ arr.pop().id*2]);;
           }
-        
           else{
             arr.push(table[i][j]);
           }
-          table[i][j]=this.KindOfCell['0'];
+          
         }
       }
       temp.push(arr);
     }
+    let newGrid=this.createNewGrid();
     for (let i = 0; i < 4; i++) {
       let lst=temp[i];
-      let row=lst.length-1;
+      let row=lst.length-1;    
       while(lst.length>0){
-        table[row][i]=lst.pop();
+        newGrid[row][i]=lst.pop();
         row--;
       }
-    }  this.setState({ grid: table });
+    }  this.setState({ grid: newGrid });
   }
 
   createNewGrid = () =>{
@@ -89,7 +76,7 @@ class Game extends Component {
       for (let j = 3; j >=0; j--) {
         let arr=[];
         for (let i = 3; i >=0; i--) {
-          if (table[i][j].id != 0) {
+          if (table[i][j].id !== 0) {
             let n=arr.length;
             if (n>0 && arr[n-1].id===table[i][j].id ){
               arr.push(this.KindOfCell[""+ arr.pop().id*2]);;
@@ -125,7 +112,6 @@ class Game extends Component {
       x = Math.floor(Math.random() * 4);
       y = Math.floor(Math.random() * 4);
     } while (data[x][y].full);
-    this.state.full[x][y] += 1;
     data[x][y].full = true;
     if (Math.random() < 0.6) {
       data[x][y].kind = "two";
