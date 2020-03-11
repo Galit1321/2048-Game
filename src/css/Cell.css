@@ -1,17 +1,23 @@
-.sixfour{
-
-    background-color: #f65e3b;
+.emptyCell{
+    margin: 0%;
+    padding: 0%;    
+    align-items: center;
+    border-spacing: 20%; 
+    border-radius: 10px;
+    height: 100px;
+    width: 100px; 
+    background-color: #cdc1b4;
 }
-.onetwoeight{
-    background-color: #edcf72;
-}
-.twofivesix{
-background-color: #edcc61;
-}
 
-.fiveonetwo{}
-.onezerotwofour{}
 
+.cell_id{
+    color: white;
+    margin: 0%;
+    padding-top:15% ;
+    font-family: Arial, Helvetica, sans-serif;
+    align-items: center;
+    font-size: 60px;  
+}
 .two{
     margin: 0%;
     padding: 0%;    
@@ -22,6 +28,7 @@ background-color: #edcc61;
     width: 100px; 
     background-color: rgb(238 ,228,218);
 }
+
 .two .cell_id{
     margin: 0%;
     padding-top:15% ;
@@ -30,25 +37,7 @@ background-color: #edcc61;
     font-size: 60px; 
     color: #808080;
 }
-.four .cell_id{
-    margin: 0%;
-    padding-top:15% ;
-    font-family: Arial, Helvetica, sans-serif;
-    align-items: center;
-    font-size: 60px; 
-    color: #808080;
-}
-.thsix{
-    background-color: #f67c5f;
-    margin: 0%;
-    padding: 0%;    
-    align-items: center;
-    border-spacing: 20%;
-    border-radius: 10px;
-    height: 100px;
-    width: 100px; 
-    ;
-}
+
 .four{
     margin: 0%;
     padding: 0%;    
@@ -59,13 +48,14 @@ background-color: #edcc61;
     width: 100px; 
     background-color: #ede0c8;
 }
-.cell_id{
-    color: white;
+
+.four .cell_id{
     margin: 0%;
     padding-top:15% ;
     font-family: Arial, Helvetica, sans-serif;
     align-items: center;
-    font-size: 60px;  
+    font-size: 60px; 
+    color: #808080;
 }
 
 .eight{
@@ -91,13 +81,28 @@ background-color: #edcc61;
     width: 100px;
 }
 
-.emptyCell{
+.thirty-two{
+    background-color: #f67c5f;
     margin: 0%;
     padding: 0%;    
     align-items: center;
-    border-spacing: 20%; 
+    border-spacing: 20%;
     border-radius: 10px;
     height: 100px;
     width: 100px; 
-    background-color: #cdc1b4;
+    ;
 }
+
+.sixty-four{
+    background-color: #f65e3b;
+}
+
+.oneHtwenty-four{
+    background-color: #edcf72;
+}
+.twoHfifty-six{
+background-color: #edcc61;
+}
+
+.fiveonetwo{}
+.onezerotwofour{}

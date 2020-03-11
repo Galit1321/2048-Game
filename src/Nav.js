@@ -1,7 +1,5 @@
 import React from "react";
-//import "./App";
 import { Link } from "react-router-dom";
-///import Image from './resources/kissclipart-joyeux-anniversaire-graldine-clipart-beautiful-b-c7adf46dc9650568.png'
 import Clock from "./Clock";
 
 class Nav extends React.Component {

@@ -4,6 +4,7 @@ import "./css/App.css";
 import Game from "./Game";
 import Nav from "./Nav";
 
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -14,6 +15,7 @@ class App extends Component {
   }
 
   render() {
+  
     return (
       <div >
               <Router>
