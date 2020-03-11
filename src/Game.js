@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./css/Cell.css";
 import Cell from "./Cell";
 import Grid from "./Grid";
-
+import ReactDOM from 'react-dom';
 class Game extends Component {
 
 
@@ -13,8 +13,7 @@ class Game extends Component {
       grid: [],
       cnt: 0,
     };
-    this.changeCell();
-    this.changeCell();
+  
   }
 
   rightArrow = () =>{
@@ -52,6 +51,7 @@ class Game extends Component {
   
 
   leftArrow = () => {
+    
     let table = this.state.grid;
     let temp = [];
     for (let i= 0; i < 4;i++) {
@@ -162,34 +162,22 @@ class Game extends Component {
     
   };
 
-  render() {
-    const score = this.state.score;
-    const data = this.state.grid;
-    let cell_id = 0;
-    let col_id=0;
-    return (
+
+  checkDOM =()=>{
+    const element = (
       <div>
-        <div>
-          <h1> {score}</h1>
-          <h1> Welcome to the game </h1>
-          <button onClick={this.upperArrow}>up</button>
-          <button onClick={this.leftArrow}>left</button>
-          <button onClick={this.DownArrow}>down</button>
-          <button onClick={this.rightArrow}>right</button>
-        </div>
-        <table>
-          <tbody>
-            {data.map(dat => (
-              <tr key={cell_id++}>
-                {dat.map(elem => (
-                  <th key={cell_id + "-" +(col_id++) }>
-                    <Cell info={elem} />
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <h1>Hello, world!</h1>
+        <h2>It is {new Date().toLocaleTimeString()}.</h2>
+      </div>
+    );
+    ReactDOM.render(element, document.getElementById('main_game'))
+  }
+
+  render() {
+
+    return (
+      <div id="main_game">
+       <button onClick={this.checkDOM}></button>
       </div>
     );
   }
